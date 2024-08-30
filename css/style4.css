@@ -1,0 +1,250 @@
+:root {
+  --white: #fff;
+  --cyan: #8ee3c8;
+  --blue: #155fcf;
+  --gray: #e0e0e0;
+}
+
+* {
+  margin: 0 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+body {
+  min-width: 10vh;
+  font-family: "Open Sans", sans-serif;
+  background-color: #155fcf;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1920px;
+  color: white;
+  width: 500px;
+  padding: 0 20px;
+}
+.header {
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--blue);
+  color: var(--white);
+  padding: 20px;
+  width: 100%;
+  font-size: 1rem;
+}
+/* Halaman Profile */
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--white);
+  margin-right: 10px;
+}
+.kelompok {
+  color: var(--gray);
+}
+
+.history {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to left, #155fcf, #fff);
+  height: 5vh;
+  border-radius: 50px;
+  color: var(--white);
+}
+
+.bx.bxs-time {
+  color: #155fcf;
+  font-size: 1.5rem;
+  border: 3px solid #155fcf;
+  border-radius: 50%;
+  margin-right: 5px;
+  position: relative;
+}
+
+/* Logo */
+.logo {
+  position: relative;
+  width: 100%;
+  text-align: right;
+  margin-bottom: 2rem;
+}
+
+.logo img {
+  transition: 1s;
+  width: 30%;
+  max-width: 150px;
+}
+
+/* Button */
+.btn-containaer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.btn {
+  margin-top: 1rem;
+  font-family: "Red Hat Display", sans-serif;
+  font-weight: bold;
+  background-color: white;
+  color: var(--blue);
+  border: none;
+  padding: 0.75rem;
+  width: 100%;
+  height: 8vh;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.small-btn-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn1 {
+  margin-top: 1rem;
+  font-family: "Red Hat Display", sans-serif;
+  font-weight: bold;
+  background-color: white;
+  color: var(--blue);
+  border: none;
+  padding: 0.75rem;
+  width: 25%;
+  height: 7vh;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* Bagian Bawah */
+.rtl {
+  padding: 16px 32px;
+  color: #155fcf;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+.rtl.atas2 {
+  position: relative;
+  margin-top: 6rem;
+  background: var(--white);
+  width: 100%;
+  height: 15vh;
+  border-radius: 15px;
+  text-align: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+.p {
+  margin-top: 0;
+}
+.titik {
+  color: var(--gray);
+}
+
+.rtl.bawah {
+  position: fixed;
+  display: flex;
+  margin-top: 1rem;
+  background: var(--white);
+  justify-content: space-around;
+  padding: 15px 0;
+  width: 100%;
+  height: 10vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 3rem;
+}
+
+.rtl.bawah a {
+  display: flex;
+  align-items: center;
+  color: #155fcf;
+}
+
+.rtl.atas {
+  position: fixed;
+  margin-bottom: 1rem;
+  background: var(--white);
+  width: 100%;
+  height: 20vh;
+  border-radius: 40px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to left, #155fcf, white);
+}
+
+.rtlg {
+  position: fixed;
+  padding-left: 5vh;
+  margin-bottom: 1rem;
+  background: var(--white);
+  width: 100%;
+  height: 5vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to left, #155fcf, white);
+}
+
+/* Media Queries */
+
+/* Desktop */
+@media (max-width: 1920px) {
+  .logo img {
+    width: 75%;
+  }
+  .wrapper {
+    width: 55%;
+    font-size: 75%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .logo img {
+    width: 75%;
+  }
+  .wrapper {
+    width: 75%;
+    font-size: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .logo img {
+    width: 70%;
+  }
+  .wrapper {
+    width: 85%;
+    font-size: 100%;
+  }
+}

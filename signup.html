@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style1.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="logo">
+        <img src="img/Logo.png" alt="" />
+      </div>
+      <form action="">
+        <h1>Let's Get Started!!</h1>
+        <p>Sign Up For Absence</p>
+
+        <div class="input-box">
+          <i class="bx bxs-user-circle"></i>
+          <input type="text" id="username" placeholder="Nama Aseli" required />
+        </div>
+        <div class="input-box">
+          <i class="bx bx-envelope"></i>
+          <input type="email" id="email" placeholder="Email Aktif" required />
+        </div>
+        <div class="input-box">
+          <i class="bx bx-lock"></i>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <input type="submit" value="Daftar" class="btn" />
+
+        <div class="login-link">
+          <p>Sudah Punya Akun?</p>
+          <a href="login.html">Masuk</a>
+        </div>
+      </form>
+      <div class="rtl bawah">#INTRN!</div>
+    </div>
+
+    <!-- Script Firebase Wajib-->
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
+
+    <!-- Script Firebase Pilihan -->
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13/firebase-database-compat.js"></script>
+
+    <!-- Script Javascript -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/script1.js"></script>
+  </body>
+</html>

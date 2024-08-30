@@ -1,0 +1,176 @@
+:root {
+  --white: #fff;
+  --cyan: #8ee3c8;
+  --blue: #155fcf;
+  --gray: #e0e0e0;
+}
+
+* {
+  margin: 0 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: #155fcf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  display: block;
+  justify-content: center;
+  max-width: 1920px;
+  color: white;
+  width: 500px;
+}
+
+/* Logo */
+.logo {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.logo img {
+  width: 75%;
+  transition: 1s;
+  top: 0;
+}
+
+/* Hero Section */
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+p {
+  margin: 0;
+  color: var(--gray);
+}
+
+/* Input Box */
+.input-box {
+  display: flex;
+  align-items: center;
+  background-color: var(--blue);
+  outline-style: solid;
+  outline-color: var(--white);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  transition: 1s;
+}
+
+.input-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 0.5rem;
+  background: transparent;
+  color: var(--white);
+  font-size: 1rem;
+}
+
+.input-box img {
+  width: 5%;
+  height: 5%;
+}
+
+/* Button */
+.btn {
+  margin-left: 25%;
+  font-family: "Red Hat Display", sans-serif;
+  font-weight: bold;
+  background-color: white;
+  color: var(--blue);
+  border: none;
+  padding: 0.75rem;
+  width: 50%;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Login */
+.login-link {
+  text-align: left;
+  font-weight: bold;
+  color: var(--white);
+  margin-top: 6px;
+}
+
+.login-link a {
+  color: var(--white);
+}
+
+/* Bagian Bawah */
+.rtl {
+  padding: 16px 32px;
+  color: #155fcf;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+.rtl.bawah {
+  position: fixed;
+  margin-top: 1rem;
+  background: var(--white);
+  width: 100%;
+  height: 10vh;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Forgor */
+.forgor-link {
+  margin-top: 1rem;
+}
+.forgor-link a {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Media Queries */
+
+/* Desktop */
+@media (max-width: 1920px) {
+  .logo img {
+    width: 75%;
+  }
+  .wrapper {
+    font-size: 75%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .logo img {
+    width: 75%;
+  }
+  .wrapper {
+    width: 75%;
+    font-size: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .logo img {
+    width: 70%;
+  }
+  .wrapper {
+    width: 85%;
+    font-size: 100%;
+  }
+}

@@ -1,0 +1,141 @@
+:root {
+  --white: #fff;
+  --cyan: #8ee3c8;
+  --blue: #155fcf;
+}
+
+* {
+  margin: 0 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+body {
+  margin: auto;
+  font-family: "Red Hat Display", sans-serif;
+  background-color: #155fcf;
+}
+
+.wrapper {
+  max-width: 1920px;
+  margin: auto;
+}
+
+/* Gambar 1/4 lingkaran warna hijau */
+.thing {
+  display: flex;
+  position: relative;
+  transition: 0.5s;
+}
+
+.thing img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 75%;
+  max-width: 100%;
+  height: auto;
+  justify-content: right;
+  align-items: flex-end;
+}
+
+/* Logo BPMP */
+.bpmp {
+  position: relative;
+}
+
+.bpmp img {
+  position: absolute;
+  top: 75px;
+  right: 10px;
+  width: 50%;
+  height: auto;
+  justify-content: right;
+}
+
+/* Kotak Yang dibawah */
+.rtl {
+  display: flex;
+  padding: 16px 32px;
+  color: #155fcf;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  position: relative;
+  justify-content: end;
+  transition: 0.5s;
+}
+
+.rtl.bawah {
+  background: var(--white);
+  width: 100%;
+  height: 13vh;
+  position: absolute;
+  justify-content: end;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Logo Web */
+.logo {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: 100vh;
+  left: 10;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: 0.5s;
+}
+
+.logo img {
+  width: 85%;
+  height: auto;
+}
+
+/* Media Queries */
+
+/* Desktop */
+@media (max-width: 1920px) {
+  .logo img {
+    width: 35%;
+  }
+  .bpmp img {
+    width: 20%;
+  }
+  .thing img {
+    width: 35%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .logo img {
+    width: 50%;
+  }
+  .bpmp img {
+    width: 30%;
+  }
+  .thing img {
+    width: 45%;
+  }
+}
+/* Mobile */
+@media (max-width: 480px) {
+  .logo img {
+    width: 70%;
+  }
+  .bpmp img {
+    width: 45%;
+    top: 30px;
+  }
+  .thing img {
+    width: 70%;
+  }
+}
