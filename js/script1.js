@@ -33,8 +33,11 @@ form.addEventListener("submit", function (e) {
     })
     .then(() => {
       console.log("User berhasil didaftarkan dan data disimpan");
-      alert("Pendaftaran berhasil!");
+      alert("Pendaftaran berhasil! Anda akan dialihkan ke halaman login.");
       form.reset(); // Mengosongkan form setelah berhasil
+
+      // Mengalihkan pengguna ke halaman login.html
+      window.location.href = "login.html";
     })
     .catch((error) => {
       console.error("Error:", error);
