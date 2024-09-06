@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const allowedLocation = {
     lat: -4.015, // Latitude
     lng: 122.500556, // Longitude
-    radius: 1000, // Radius dalam meter
+    radius: 100, // Radius dalam meter
   };
 
   // Fungsi untuk mendapatkan tanggal dan waktu saat ini dalam format yang diinginkan
