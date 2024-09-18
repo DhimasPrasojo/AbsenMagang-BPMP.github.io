@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return {
       year,
       month,
+      date,
+      time,
       dateTime: `${year}/${month}/${date}/${time}`,
     };
   }
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const φ1 = (lat1 * Math.PI) / 180;
     const φ2 = (lat2 * Math.PI) / 180;
     const Δφ = ((lat2 - lat1) * Math.PI) / 180;
-    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+    const Δλ = ((lon1 - lon2) * Math.PI) / 180;
 
     const a =
       Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
@@ -92,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    // Cek apakah presensi "hadir" harus dilakukan di lokasi
     if (status === "hadir") {
       checkLocation((isInAllowedLocation) => {
         if (!isInAllowedLocation) {
@@ -108,24 +111,72 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function proceedWithSavingPresensi(userId, status) {
-    const { year, month, dateTime } = getCurrentDateTime();
+    const { year, month, date, time } = getCurrentDateTime();
     const presensiRef = firebase
       .database()
       .ref(`attendance/${userId}/${year}/${month}`);
 
-    const newPresensiData = {
-      [status]: `${dateTime}/${status}`,
+    // Membuat entri baru dengan menggunakan ServerValue.TIMESTAMP
+    const newPresensiEntry = {
+      date: date,
+      time: time,
+      status: status,
     };
 
+    // Push data dengan kunci timestamp dari server
     presensiRef
-      .update(newPresensiData)
+      .push({
+        ...newPresensiEntry,
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+      })
       .then(() => {
         alert(`Presensi ${status} berhasil disimpan!`);
+        disableButtons(); // Disable tombol setelah presensi
       })
       .catch((error) => {
         console.error("Error menyimpan presensi:", error);
         alert("Terjadi kesalahan saat menyimpan presensi");
       });
+  }
+
+  // Fungsi untuk menonaktifkan tombol presensi
+  function disableButtons() {
+    btnPresensiHadir.disabled = true;
+    btnPresensiAlpa.disabled = true;
+    btnIzin.disabled = true;
+    btnSakit.disabled = true;
+  }
+
+  // Fungsi untuk mengaktifkan tombol presensi
+  function enableButtons() {
+    btnPresensiHadir.disabled = false;
+    btnPresensiAlpa.disabled = false;
+    btnIzin.disabled = false;
+    btnSakit.disabled = false;
+  }
+
+  // Fungsi untuk mengecek apakah pengguna sudah melakukan presensi hari ini
+  function checkPresensiToday() {
+    const user = firebase.auth().currentUser;
+    if (!user) return;
+
+    const { year, month, date } = getCurrentDateTime();
+    const presensiRef = firebase
+      .database()
+      .ref(`attendance/${user.uid}/${year}/${month}`)
+      .orderByChild("date")
+      .equalTo(date);
+
+    presensiRef.once("value").then((snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        // Jika data presensi ada, disable semua tombol
+        disableButtons();
+        alert("Anda sudah melakukan presensi hari ini");
+      } else {
+        enableButtons(); // Jika tidak ada presensi, aktifkan tombol
+      }
+    });
   }
 
   // Event listener untuk tombol-tombol
@@ -166,6 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (user) {
       console.log("User logged in:", user.uid);
       displayUserInfo();
+      checkPresensiToday(); // Cek presensi pengguna saat halaman dimuat
     } else {
       console.log("No user logged in");
       window.location.href = "login.html"; // Redirect ke halaman login jika tidak ada user yang login
