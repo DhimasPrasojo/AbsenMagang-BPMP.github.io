@@ -93,7 +93,7 @@ body {
   text-align: center;
   background: #155fcf;
   height: 4vh;
-  width: 40%;
+  width: 100%;
   border-radius: 25px;
   color: var(--white);
   font-size: 0.8rem;
@@ -113,7 +113,37 @@ body {
 }
 
 .flatpickr-calendar {
+  width: auto !important;
+  min-width: 280px !important;
+  max-width: 325px !important;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: 15px;
   box-shadow: 0 2px 10px rgba(21, 95, 207);
+  padding: 10px;
+}
+
+.flatpickr-monthSelect-months {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  padding: 10px !important;
+}
+
+.flatpickr-monthSelect-month {
+  width: auto !important;
+  padding: 8px !important;
+  margin: 0 !important;
+  font-size: 1rem !important;
+  border-radius: 8px !important;
+  text-align: center;
+  color: var(--blue);
+  transition: all 0.3s ease;
+}
+
+.flatpickr-monthSelect-month.selected {
+  background: var(--blue) !important;
+  color: white !important;
 }
 
 .flatpickr-months .flatpickr-month {
@@ -121,8 +151,43 @@ body {
 }
 
 .flatpickr-current-month {
-  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 !important;
+}
+.flatpickr-current-month .cur-month {
   font-weight: bold;
+  color: var(--blue);
+}
+
+/* Tombol navigasi */
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  padding: 5px !important;
+  fill: var(--blue) !important;
+}
+
+/* Animasi */
+.flatpickr-calendar.open {
+  animation: fpFadeInDown 300ms ease-out;
+}
+
+@keyframes fpFadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Sembunyikan elemen yang tidak diperlukan */
+.flatpickr-weekdays,
+.flatpickr-days {
+  display: none !important;
 }
 /* Halaman Profile */
 .profile {
@@ -285,5 +350,23 @@ body {
   }
   .kehadiran {
     width: 100%;
+  }
+  .flatpickr-calendar {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90% !important;
+    min-width: 250px !important;
+  }
+
+  .flatpickr-monthSelect-months {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px !important;
+  }
+
+  .flatpickr-monthSelect-month {
+    padding: 6px 4px !important;
+    font-size: 13px !important;
   }
 }

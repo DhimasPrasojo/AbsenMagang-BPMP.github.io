@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const auth = firebase.auth();
   const db = firebase.database();
 
-  // Elemen UI
+  // Element UI
   const elements = {
     date: document.querySelector(".date"),
     name: document.querySelector(".profile span"),
@@ -36,33 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     onOpen: function () {
       elements.date.classList.add("date-picker-open");
-
-      setTimeout(() => {
-        const monthElement = document.querySelector(
-          ".flatpickr-monthSelect-months"
-        );
-        if (monthElement) {
-          monthElement.computedStyleMap.display = "grid";
-        }
-      }, 100);
     },
     onClose: function () {
       elements.date.classList.remove("date-picker-open");
     },
     enableTime: false,
-    enableSeconds: false,
-    enableMinutes: false,
-    enableHours: false,
-    time_24hr: false,
-    inline: false,
     static: true,
-    monthSelectorType: "static",
   };
 
   // Inisialisasi Flatpickr
   const datePicker = flatpickr(elements.date, flatpickrConfig);
-
-  document.head.appendChild(style);
 
   // Fungsi format attendance
   const formatAttendance = (count) =>
@@ -70,10 +53,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fungsi update UI
   function updateUI(userData, attendanceData) {
-    console.log("UserData:", userData);
-    console.log("AttendanceData:", attendanceData);
+    if (!userData || !attendanceData) {
+      console.error("Data tidak valid:", { userData, attendanceData });
+      return;
+    }
 
     elements.name.textContent = userData.username || "Nama";
+    if (userData.kelompok) {
+      elements.name.innerHTML += `<br><span class="kelompok">${userData.kelompok}</span>`;
+    }
+
     elements.hadir.textContent = formatAttendance(attendanceData.hadir);
     elements.alpha.textContent = formatAttendance(attendanceData.alpa);
     elements.izin.textContent = formatAttendance(attendanceData.izin);
@@ -89,69 +78,127 @@ document.addEventListener("DOMContentLoaded", function () {
       sakit: 0,
     };
 
-    const countedDates = new Set();
+    if (!attendanceData) return counts;
 
-    Object.entries(attendanceData).forEach(([date, entry]) => {
-      if (!countedDates.has(date)) {
-        switch (entry.status) {
-          case "hadir":
-            counts.hadir++;
-            break;
-          case "alpa":
-            counts.alpa++;
-            break;
-          case "izin":
-            counts.izin++;
-            break;
-          case "sakit":
-            counts.sakit++;
-            break;
+    // Objek untuk menyimpan status terakhir untuk setiap tanggal
+    const latestStatusByDate = {};
+
+    // Iterasi semua entri attendance
+    Object.entries(attendanceData).forEach(([key, entry]) => {
+      if (entry && entry.date && entry.status && entry.timestamp) {
+        const date = entry.date;
+
+        // Jika belum ada entry untuk tanggal ini atau timestamp lebih baru
+        if (
+          !latestStatusByDate[date] ||
+          entry.timestamp > latestStatusByDate[date].timestamp
+        ) {
+          latestStatusByDate[date] = {
+            status: entry.status.toLowerCase(),
+            timestamp: entry.timestamp,
+          };
         }
-        countedDates.add(date);
       }
     });
+
+    // Hitung jumlah status dari entry terakhir setiap tanggal
+    Object.values(latestStatusByDate).forEach(({ status }) => {
+      switch (status) {
+        case "hadir":
+          counts.hadir++;
+          break;
+        case "alpa":
+          counts.alpa++;
+          break;
+        case "izin":
+          counts.izin++;
+          break;
+        case "sakit":
+          counts.sakit++;
+          break;
+      }
+    });
+
+    // Log untuk debugging
+    console.log("Status terakhir per tanggal:", latestStatusByDate);
+    console.log("Hasil perhitungan:", counts);
 
     return counts;
   }
 
   // Fungsi get attendance data
   async function getAttendanceData(userId, date) {
+    if (!userId || !date) {
+      console.error("UserId atau date tidak valid:", { userId, date });
+      return null;
+    }
+
     try {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0");
+
+      console.log(`Mengambil data attendance untuk: ${year}/${month}`);
+
       const snapshot = await db
         .ref(`attendance/${userId}/${year}/${month}`)
         .once("value");
 
-      const data = snapshot.val() || {};
+      const data = snapshot.val();
+      console.log("Data attendance mentah:", data);
+
       return calculateAttendance(data);
     } catch (error) {
-      console.error("Error getting attendance data:", error);
+      console.error("Error mengambil data attendance:", error);
       throw error;
     }
   }
 
   // Fungsi get user data
   async function getUserData(userId) {
+    if (!userId) {
+      console.error("UserId tidak valid");
+      return null;
+    }
+
     try {
-      const snapshot = await db.ref("users/" + userId).once("value");
-      return snapshot.val() || {};
+      const snapshot = await db.ref(`users/${userId}`).once("value");
+      const userData = snapshot.val();
+
+      if (!userData) {
+        console.warn("Data user tidak ditemukan untuk userId:", userId);
+      }
+
+      return userData || {};
     } catch (error) {
-      console.error("Error getting user data:", error);
+      console.error("Error mengambil data user:", error);
       throw error;
     }
   }
 
   // Fungsi update attendance data
   async function updateAttendanceData(userId, selectedDate) {
+    if (!userId || !selectedDate) {
+      console.error("Parameter tidak valid:", { userId, selectedDate });
+      return;
+    }
+
     try {
       const [userData, attendanceData] = await Promise.all([
         getUserData(userId),
         getAttendanceData(userId, selectedDate),
       ]);
+
+      if (!userData || !attendanceData) {
+        console.error("Gagal mendapatkan data:", { userData, attendanceData });
+        return;
+      }
+
       updateUI(userData, attendanceData);
     } catch (error) {
-      console.error("Error updating attendance data:", error);
+      console.error("Error mengupdate data attendance:", error, {
+        userId,
+        selectedDate,
+      });
       alert("Terjadi kesalahan saat mengambil data. Silakan coba lagi.");
     }
   }
@@ -159,10 +206,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Auth state observer
   auth.onAuthStateChanged((user) => {
     if (user) {
-      console.log("Authenticated User:", user);
+      console.log("User terautentikasi:", user.uid);
       const currentDate = new Date();
       updateAttendanceData(user.uid, currentDate);
     } else {
+      console.log("User tidak terautentikasi, mengalihkan ke login");
       window.location.href = "login.html";
     }
   });
