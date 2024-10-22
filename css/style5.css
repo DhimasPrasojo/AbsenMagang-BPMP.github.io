@@ -138,6 +138,7 @@ body {
   margin: 0 !important;
   font-size: 1rem !important;
   border-radius: 8px !important;
+  align-items: center;
   text-align: center;
   color: var(--blue);
   transition: all 0.3s ease;
