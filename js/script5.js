@@ -13,17 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
     sakit: document.querySelector(".sakit"),
   };
 
+  // Deteksi perangkat mobile
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   // Inisialisasi Flatpickr
-  const datePicker = flatpickr(elements.date, {
-    locale: "id", // Menggunakan bahasa Indonesia
-    dateFormat: "F Y", // Format: Nama Bulan Tahun
+  const flatpickrConfig = {
+    locale: "id",
+    dateFormat: "F Y",
     defaultDate: new Date(),
     plugins: [
       new monthSelectPlugin({
-        shorthand: false, // Tampilkan nama bulan lengkap
-        dateFormat: "F Y", // Format yang sama dengan config utama
+        shorthand: false,
+        dateFormat: "F Y",
         altFormat: "F Y",
-        theme: "light", // atau "dark" sesuai tema Anda
+        theme: "light",
       }),
     ],
     onChange: function (selectedDates) {
@@ -34,15 +37,45 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     },
     onOpen: function () {
-      // Tambahkan kelas untuk styling saat picker terbuka
       elements.date.classList.add("date-picker-open");
     },
     onClose: function () {
-      // Hapus kelas saat picker tertutup
       elements.date.classList.remove("date-picker-open");
     },
-  });
+  };
 
+  // Tambahan konfigurasi untuk mobile
+  if (isMobile) {
+    Object.assign(flatpickrConfig, {
+      disableMobile: true, // Mencegah penggunaan picker native mobile
+      clickOpens: true, // Memastikan picker dapat dibuka dengan tap
+      static: true, // Mencegah picker bergerak saat scroll
+      monthSelectorType: "static", // Menggunakan tampilan bulan statis
+    });
+  }
+
+  // Inisialisasi Flatpickr dengan konfigurasi yang telah digabung
+  const datePicker = flatpickr(elements.date, flatpickrConfig);
+
+  // Tambahan CSS untuk memastikan tampilan konsisten di mobile
+  if (isMobile) {
+    const style = document.createElement("style");
+    style.textContent = `
+      .flatpickr-monthSelect-month {
+        font-size: 16px !important;
+        padding: 10px !important;
+      }
+      .flatpickr-calendar {
+        width: 100% !important;
+        max-width: 325px !important;
+        touch-action: manipulation !important;
+      }
+      .flatpickr-months {
+        padding: 10px 0 !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
   // Fungsi format attendance
   const formatAttendance = (count) =>
     count === undefined || count === 0 ? "- Kali" : `${count} Kali`;
