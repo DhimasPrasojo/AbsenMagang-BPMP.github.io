@@ -85,6 +85,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 20px;
 }
 
 .date {
@@ -93,12 +94,13 @@ body {
   text-align: center;
   background: #155fcf;
   height: 4vh;
-  width: 100%;
-  border-radius: 25px;
+  width: 75% !important;
+  border-radius: 20px;
   color: var(--white);
   font-size: 0.8rem;
   font-weight: bold;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .date:focus {
