@@ -14,6 +14,14 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css"
+    />
     <link rel="stylesheet" href="css/style5.css" />
   </head>
   <body>
@@ -26,7 +34,13 @@
       </div>
       <div class="rtl atas2">
         <h2>Rekap Absensi</h2>
-        <input type="text" class="date" readonly value="Pilih Bulan" />
+        <input
+          type="text"
+          id="datePicker"
+          class="date"
+          readonly
+          value="Pilih Bulan"
+        />
       </div>
       <div class="header">
         <div class="profile">
@@ -57,7 +71,12 @@
         <a href="group.html"><i class="bx bxs-group"></i></a>
       </div>
     </div>
-
+    <!--Script Flatpickr-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Flatpickr bahasa Indonesia -->
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+    <!-- Month Select Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
     <!-- Script Firebase Wajib-->
     <script src="https://www.gstatic.com/firebasejs/10.13/firebase-app-compat.js"></script>
 

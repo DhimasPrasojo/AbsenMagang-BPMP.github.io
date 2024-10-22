@@ -101,13 +101,32 @@ document.addEventListener("DOMContentLoaded", function () {
           alert(
             "Anda tidak berada di area BPMP SULTRA, tidak bisa melakukan absensi hadir"
           );
+          enableButtons();
           return;
         }
-        proceedWithSavingPresensi(user.uid, status);
+        checkAndSavePresensi(user.uid, status);
       });
     } else {
-      proceedWithSavingPresensi(user.uid, status);
+      checkAndSavePresensi(user.uid, status);
     }
+  }
+  function checkAndSavePresensi(userId, status) {
+    const { year, month, date } = getCurrentDateTime();
+    const presensiRef = firebase
+      .database()
+      .ref(`attendance/${userId}/${year}/${month}`)
+      .orderByChild("date")
+      .equalTo(date);
+
+    presensiRef.once("value").then((snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        alert(`Anda sudah melakukan presensi ${status} hari ini`);
+        enableButtons();
+      } else {
+        proceedWithSavingPresensi(userId, status);
+      }
+    });
   }
 
   function proceedWithSavingPresensi(userId, status) {
@@ -136,6 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .catch((error) => {
         console.error("Error menyimpan presensi:", error);
         alert("Terjadi kesalahan saat menyimpan presensi");
+        enableButtons();
       });
   }
 
@@ -180,10 +200,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listener untuk tombol-tombol
-  btnPresensiHadir.addEventListener("click", () => savePresensi("hadir"));
-  btnPresensiAlpa.addEventListener("click", () => savePresensi("alpa"));
-  btnIzin.addEventListener("click", () => savePresensi("izin"));
-  btnSakit.addEventListener("click", () => savePresensi("sakit"));
+  btnPresensiHadir.addEventListener("click", () => {
+    disableButtons();
+    savePresensi("hadir");
+  });
+  btnPresensiAlpa.addEventListener("click", () => {
+    disableButtons();
+    savePresensi("alpa");
+  });
+  btnIzin.addEventListener("click", () => {
+    disableButtons();
+    savePresensi("izin");
+  });
+  btnSakit.addEventListener("click", () => {
+    disableButtons();
+    savePresensi("sakit");
+  });
 
   // Fungsi untuk menampilkan nama dan kelompok pengguna
   function displayUserInfo() {

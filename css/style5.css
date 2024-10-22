@@ -12,6 +12,7 @@
   outline: none;
   border: none;
   text-decoration: none;
+  list-style: none;
 }
 
 body {
@@ -100,6 +101,29 @@ body {
   cursor: pointer;
 }
 
+.date:focus {
+  outline: none;
+  outline-width: 1rem;
+  border-color: black;
+  color: black;
+}
+
+.date-picker-open {
+  border-color: black;
+}
+
+.flatpickr-calendar {
+  box-shadow: 0 2px 10px rgba(21, 95, 207);
+}
+
+.flatpickr-months .flatpickr-month {
+  background: var(--white);
+}
+
+.flatpickr-current-month {
+  color: black;
+  font-weight: bold;
+}
 /* Halaman Profile */
 .profile {
   display: flex;
@@ -125,21 +149,10 @@ body {
   width: 100%;
   font-size: 1rem;
 }
-.hadir {
-  margin-top: 5px;
-  background-color: #fff;
-  color: var(--blue);
-  height: 10vh;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-  padding: 1.3rem;
-  border-radius: 20px;
-  margin-bottom: 5px;
-  font-size: 1.2rem;
-}
-.alpha {
+.hadir,
+.alpha,
+.izin,
+.sakit {
   margin-top: 5px;
   background-color: #fff;
   color: var(--blue);
@@ -161,7 +174,8 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.izin {
+.izin,
+.sakit {
   color: #155fcf;
   background-color: #fff;
   width: 15vh;
@@ -173,17 +187,7 @@ body {
   border: none;
   border-radius: 20px;
 }
-.sakit {
-  color: #155fcf;
-  background-color: #fff;
-  width: 15vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 0.5rem;
-  height: 6vh;
-  border-radius: 20px;
-}
+
 /* Logo */
 .logo {
   position: relative;
@@ -228,6 +232,9 @@ body {
   align-items: center;
   color: var(--blue);
 }
+
+/* flatpickr */
+
 /* Media Queries */
 
 /* Desktop */
